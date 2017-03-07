@@ -15,6 +15,8 @@ import android.widget.GridLayout;
 
 public class GameView extends GridLayout {
 
+    private static final int COUNT = 4;
+
     public GameView(Context context) {
         this(context,null);
     }
@@ -31,6 +33,10 @@ public class GameView extends GridLayout {
 
 
     private void initGameView(){
+
+        setColumnCount(COUNT);
+        setBackgroundColor(0xffbbada0);
+
         this.setOnTouchListener(new OnTouchListener() {
 
             private float startX,startY,offsetX,offsetY;
@@ -81,6 +87,27 @@ public class GameView extends GridLayout {
                 return true;
             }
         });
+    }
+
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        int cardWidth = (Math.min(w,h)-10)/COUNT;
+        addCards(cardWidth,cardWidth);
+    }
+
+    private void addCards(int cardWidth,int cardHeight){
+
+        Card c;
+
+        for (int i = 0; i < COUNT; i++) {
+            for (int j = 0; j < COUNT; j++) {
+                c = new Card(getContext());
+                c.setNum(2);
+                addView(c,cardWidth,cardHeight);
+            }
+        }
     }
 
     private void swipeLeft(){
