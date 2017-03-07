@@ -1,10 +1,14 @@
 package com.giousa.game2048;
 
 import android.content.Context;
+import android.graphics.Point;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.GridLayout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Description:
@@ -16,6 +20,8 @@ import android.widget.GridLayout;
 public class GameView extends GridLayout {
 
     private static final int COUNT = 4;
+    private Card[][] cardsMap = new Card[COUNT][COUNT];
+    private List<Point> emptyPoints = new ArrayList<>();
 
     public GameView(Context context) {
         this(context,null);
@@ -95,6 +101,19 @@ public class GameView extends GridLayout {
         super.onSizeChanged(w, h, oldw, oldh);
         int cardWidth = (Math.min(w,h)-10)/COUNT;
         addCards(cardWidth,cardWidth);
+
+        startGame();
+    }
+
+    private void startGame() {
+        for (int i = 0; i < COUNT; i++) {
+            for (int j = 0; j < COUNT; j++) {
+                cardsMap[i][j].setNum(0);
+            }
+        }
+
+        addRandomNum();
+        addRandomNum();
     }
 
     private void addCards(int cardWidth,int cardHeight){
@@ -104,11 +123,30 @@ public class GameView extends GridLayout {
         for (int i = 0; i < COUNT; i++) {
             for (int j = 0; j < COUNT; j++) {
                 c = new Card(getContext());
-                c.setNum(2);
+                c.setNum(0);
                 addView(c,cardWidth,cardHeight);
+
+                cardsMap[i][j] = c;
             }
         }
     }
+
+    private void addRandomNum(){
+        
+        emptyPoints.clear();
+        
+        for (int i = 0; i < COUNT; i++) {
+            for (int j = 0; j < COUNT; j++) {
+                if(cardsMap[i][j].getNum() <= 0){
+                    emptyPoints.add(new Point(i,j));
+                }
+            }
+        }
+
+        Point p = emptyPoints.remove((int) (Math.random() * emptyPoints.size()));
+        cardsMap[p.x][p.y].setNum(Math.random() > 0.1 ? 2: 4);
+    }
+
 
     private void swipeLeft(){
 
