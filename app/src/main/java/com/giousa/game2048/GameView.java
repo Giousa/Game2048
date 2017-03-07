@@ -2,6 +2,8 @@ package com.giousa.game2048;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.GridLayout;
 
 /**
@@ -29,6 +31,60 @@ public class GameView extends GridLayout {
 
 
     private void initGameView(){
-        System.out.println("----");
+        this.setOnTouchListener(new OnTouchListener() {
+
+            private float startX,startY,offsetX,offsetY;
+
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+
+                switch (motionEvent.getAction()){
+
+                    case MotionEvent.ACTION_DOWN:
+
+                        startX = motionEvent.getX();
+                        startY = motionEvent.getY();
+
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        offsetX = motionEvent.getX() - startX;
+                        offsetY = motionEvent.getY() - startY;
+
+                        if(Math.abs(offsetX) > Math.abs(offsetY)){
+                            //水平滑动
+                            if(offsetX < -5){
+                                //向左
+                                System.out.println("左");
+
+                            }else if(offsetX > 5){
+                                //向右
+                                System.out.println("右");
+
+                            }
+                        }else{
+                            //垂直滑动
+                            if(offsetY < -5){
+                                //向上
+                                System.out.println("上");
+
+                            }else if(offsetY > 5){
+                                //向下
+                                System.out.println("下");
+
+                            }
+
+
+                        }
+
+
+
+                        break;
+
+                }
+
+                return true;
+            }
+        });
     }
 }
