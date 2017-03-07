@@ -55,30 +55,25 @@ public class GameView extends GridLayout {
                             //水平滑动
                             if(offsetX < -5){
                                 //向左
-                                System.out.println("左");
+                                swipeLeft();
 
                             }else if(offsetX > 5){
                                 //向右
-                                System.out.println("右");
-
+                                swipeRight();
                             }
                         }else{
                             //垂直滑动
                             if(offsetY < -5){
                                 //向上
-                                System.out.println("上");
+                                swipeUp();
 
                             }else if(offsetY > 5){
                                 //向下
-                                System.out.println("下");
+                                swipeDown();
 
                             }
 
-
                         }
-
-
-
                         break;
 
                 }
@@ -86,5 +81,21 @@ public class GameView extends GridLayout {
                 return true;
             }
         });
+    }
+
+    private void swipeLeft(){
+
+    }
+
+    private void swipeRight(){
+
+    }
+
+    private void swipeUp(){
+
+    }
+
+    private void swipeDown(){
+
     }
 }
